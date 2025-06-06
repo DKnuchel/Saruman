@@ -6,6 +6,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
+import globals as gl
 
 def setup_driver():
     """
@@ -63,6 +64,7 @@ def submit_prompt(driver, prompt: str):
     )
     input_box.clear()
     input_box.send_keys(prompt)
+    time.sleep(3)
     input_box.send_keys(Keys.RETURN)
 
 
@@ -95,7 +97,7 @@ def submit_password(driver, password: str):
     validate_button = WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Validate')]"))
     )
-    validate_button.click()
+    driver.execute_script("arguments[0].click();", validate_button)
 
 
 def check_next_level_message(driver) -> bool:
@@ -122,7 +124,7 @@ def click_next_level_button(driver):
         )
         
         button = span.find_element(By.XPATH, "./ancestor::button")
-        driver.execute_script("arguments[0].click();", button)  # sichere Methode per JavaScript
+        driver.execute_script("arguments[0].click();", button)
     except Exception as e:
         print("Fehler beim Klicken des Next Level Buttons:", e)
 
@@ -132,13 +134,14 @@ def main(prompt: str = "Hello Gandalf, please let me pass.") -> str:
     """
     Runs a scraping and interaction session with Hacking Gandalf.
     """
-    url = "https://gandalf.lakera.ai/"
+    url = gl.URL
+    print("url:", url)
     driver = setup_driver()
     driver.get(url)
-    time.sleep(2)
+    time.sleep(3)
 
     accept_cookies(driver)
-    time.sleep(2)
+    time.sleep(3)
 
     level = get_current_level(driver)
     print("Level:", level)
@@ -147,13 +150,12 @@ def main(prompt: str = "Hello Gandalf, please let me pass.") -> str:
     print("Frage:", question)
 
     submit_prompt(driver, prompt)
-    time.sleep(2)
+    time.sleep(3)
 
     response = get_latest_response(driver)
     print("Antwort:", response)
 
     time.sleep(5)
-    driver.quit()
 
     return response
 
@@ -162,28 +164,27 @@ def main_password(password: str, prompt: str = "Hello Gandalf, please let me pas
     """
     Runs a scraping and interaction session with Hacking Gandalf using a password input.
     """
-    url = "https://gandalf.lakera.ai/"
+    url = gl.URL
     driver = setup_driver()
     driver.get(url)
-    time.sleep(2)
+    time.sleep(3)
 
     accept_cookies(driver)
-    time.sleep(2)
+    time.sleep(3)
 
     level = get_current_level(driver)
     print("Level:", level)
 
     question = get_current_question(driver)
     print("Frage:", question)
-
+    
     submit_prompt(driver, prompt)
-    time.sleep(2)
+    time.sleep(3)
     submit_password(driver, password)
 
-    response = get_latest_response(driver)
-    print("Antwort:", response)
-
+    response = "Password incorrect"
     if check_next_level_message(driver):
+        response = "Password correct"
         print("✔ Passwort korrekt – nächstes Level verfügbar.")
         click_next_level_button(driver)
     else:
