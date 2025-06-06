@@ -141,10 +141,10 @@ def main(prompt: str = "Hello Gandalf, please let me pass.") -> str:
     if driver is None:
         driver = setup_driver()
         driver.get(url)
-    time.sleep(3)
+    time.sleep(1)
 
     accept_cookies(driver)
-    time.sleep(3)
+    time.sleep(1)
 
     level = get_current_level(driver)
     print("Level:", level)
@@ -153,12 +153,12 @@ def main(prompt: str = "Hello Gandalf, please let me pass.") -> str:
     print("Frage:", question)
 
     submit_prompt(driver, prompt)
-    time.sleep(3)
+    time.sleep(1)
 
     response = get_latest_response(driver)
     print("Antwort:", response)
 
-    time.sleep(5)
+    time.sleep(1)
 
     return response
 
@@ -172,10 +172,10 @@ def main_password(password: str, prompt: str = "Hello Gandalf, please let me pas
     if driver is None:
         driver = setup_driver()
         driver.get(url)
-    time.sleep(3)
+    time.sleep(1)
 
     accept_cookies(driver)
-    time.sleep(3)
+    time.sleep(1)
 
     level = get_current_level(driver)
     print("Level:", level)
@@ -184,7 +184,7 @@ def main_password(password: str, prompt: str = "Hello Gandalf, please let me pas
     print("Frage:", question)
     
     submit_prompt(driver, prompt)
-    time.sleep(3)
+    time.sleep(1)
     submit_password(driver, password)
 
     response = "Password incorrect"

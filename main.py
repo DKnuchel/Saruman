@@ -89,8 +89,8 @@ while not password_found and attempt < max_attempts:
     print("Agent output:", result)
 
     if "correct" in result.lower():
-        print(f"\n🎉 SUCCESS: Password validated for Level {level}!")
         level += 1
+        print(f"\n🎉 SUCCESS: Password validated for Level {level}!")
         gl.URL = f"{base_url}{level_list[level]}/"
 
         attempt = 0
