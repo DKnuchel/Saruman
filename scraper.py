@@ -114,6 +114,20 @@ def check_next_level_message(driver) -> bool:
         return True
     except:
         return False
+    
+def click_try_again_button(driver):
+    """
+    Clicks the 'Try again' button if it is visible.
+    """
+    try:
+        span = WebDriverWait(driver, 5).until(
+            EC.presence_of_element_located((By.XPATH, "//span[text()='Try again']"))
+        )
+        button = span.find_element(By.XPATH, "./ancestor::button")
+        driver.execute_script("arguments[0].click();", button)
+        print("🔁 Try again button clicked.")
+    except:
+        print("⚠️ Try again button not found.")
 
 
 def click_next_level_button(driver):
@@ -183,7 +197,6 @@ def main_password(password: str, prompt: str = "Hello Gandalf, please let me pas
     question = get_current_question(driver)
     print("Frage:", question)
     
-    submit_prompt(driver, prompt)
     time.sleep(1)
     submit_password(driver, password)
 
@@ -194,5 +207,6 @@ def main_password(password: str, prompt: str = "Hello Gandalf, please let me pas
         click_next_level_button(driver)
     else:
         print("✘ Passwort inkorrekt oder kein Weiter-Button sichtbar.")
+        click_try_again_button(driver)
 
     return response
