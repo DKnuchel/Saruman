@@ -8,6 +8,8 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 import globals as gl
 
+driver = None	
+
 def setup_driver():
     """
     Initializes and returns a Selenium WebDriver instance with Chrome.
@@ -60,7 +62,7 @@ def submit_prompt(driver, prompt: str):
     Inputs a prompt into the text area and submits it.
     """
     input_box = WebDriverWait(driver, 20).until(
-        EC.presence_of_element_located((By.ID, "comment"))
+        EC.element_to_be_clickable((By.ID, "comment"))
     )
     input_box.clear()
     input_box.send_keys(prompt)
@@ -134,10 +136,11 @@ def main(prompt: str = "Hello Gandalf, please let me pass.") -> str:
     """
     Runs a scraping and interaction session with Hacking Gandalf.
     """
+    global driver
     url = gl.URL
-    print("url:", url)
-    driver = setup_driver()
-    driver.get(url)
+    if driver is None:
+        driver = setup_driver()
+        driver.get(url)
     time.sleep(3)
 
     accept_cookies(driver)
@@ -164,9 +167,11 @@ def main_password(password: str, prompt: str = "Hello Gandalf, please let me pas
     """
     Runs a scraping and interaction session with Hacking Gandalf using a password input.
     """
+    global driver
     url = gl.URL
-    driver = setup_driver()
-    driver.get(url)
+    if driver is None:
+        driver = setup_driver()
+        driver.get(url)
     time.sleep(3)
 
     accept_cookies(driver)
