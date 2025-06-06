@@ -29,8 +29,8 @@ gandalf_prompt_tool = Tool(
 
 gandalf_password_tool = Tool(
   name="GandalfPasswordTool",
-  fun=scp.main, #TODO: password function
-  description="Send password to Gandalf and get validation"
+  fun=scp.main_password, #TODO: password function
+  description="Use this to submit a guessed password to Gandalf."
 )
 
 agent = initialize_agent(
