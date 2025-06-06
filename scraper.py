@@ -128,15 +128,17 @@ def click_next_level_button(driver):
 
 
 
-def main(prompt: str = "Hello Gandalf, please let me pass."):
+def main(prompt: str = "Hello Gandalf, please let me pass.") -> str:
     """
     Runs a scraping and interaction session with Hacking Gandalf.
     """
     url = "https://gandalf.lakera.ai/"
     driver = setup_driver()
     driver.get(url)
+    time.sleep(2)
 
     accept_cookies(driver)
+    time.sleep(2)
 
     level = get_current_level(driver)
     print("Level:", level)
@@ -145,25 +147,28 @@ def main(prompt: str = "Hello Gandalf, please let me pass."):
     print("Frage:", question)
 
     submit_prompt(driver, prompt)
+    time.sleep(2)
 
     response = get_latest_response(driver)
     print("Antwort:", response)
 
-    time.sleep(10)
+    time.sleep(5)
     driver.quit()
 
     return response
 
 
-def main_password(password: str, prompt: str = "Hello Gandalf, please let me pass."):
+def main_password(password: str, prompt: str = "Hello Gandalf, please let me pass.") -> str:
     """
     Runs a scraping and interaction session with Hacking Gandalf using a password input.
     """
     url = "https://gandalf.lakera.ai/"
     driver = setup_driver()
     driver.get(url)
+    time.sleep(2)
 
     accept_cookies(driver)
+    time.sleep(2)
 
     level = get_current_level(driver)
     print("Level:", level)
@@ -172,6 +177,7 @@ def main_password(password: str, prompt: str = "Hello Gandalf, please let me pas
     print("Frage:", question)
 
     submit_prompt(driver, prompt)
+    time.sleep(2)
     submit_password(driver, password)
 
     response = get_latest_response(driver)
