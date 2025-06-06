@@ -78,8 +78,8 @@ def get_latest_response(driver):
         return answer_element.text.strip()
     except:
         return "(Keine Antwort gefunden)"
-    
-    
+
+
 def submit_password(driver, password: str):
     """
     Inputs a password into the password field and clicks the 'Validate' button.
@@ -189,5 +189,4 @@ def main_password(password: str, prompt: str = "Hello Gandalf, please let me pas
     else:
         print("✘ Passwort inkorrekt oder kein Weiter-Button sichtbar.")
 
-    driver.quit()
     return response
